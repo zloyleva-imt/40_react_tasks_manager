@@ -11,8 +11,8 @@ export default class App extends Component {
         buttonName: "Add new task",
         taskListName: "Tasks list",
         tasks: [
-            {id: 1, name:"Wake up"},
-            {id: 2, name:"Clean your teeth"},
+            {id: 1, name:"Wake up", isDone:false},
+            {id: 2, name:"Clean your teeth", isDone:false},
         ],
         inputTaskName: "",
         hasError: false
@@ -54,9 +54,17 @@ export default class App extends Component {
 
                             {
                                 tasks.map(el => (
-                                    <div className="card my-2 Task__Item" key={el.id}>
+                                    <div
+                                        className={`card my-2 Task__Item ${(el.isDone?"bg-secondary text-white":"")}`} key={el.id}>
                                         <div className="card-body">
                                             <h5 className="card-title">{ el.name }</h5>
+                                            {
+                                                el.isDone?
+                                                    null
+                                                    :
+                                                    <button className="btn btn-primary"
+                                                            onClick={() => {this.setDone(el.id)}}>Done</button>
+                                            }
                                         </div>
                                     </div>
                                 ))
@@ -68,6 +76,13 @@ export default class App extends Component {
             </Fragment>
         );
     }
+
+    setDone = (id) => {
+        const {tasks} = this.state;
+        this.setState({
+            tasks: tasks.map(el => el.id === id?{...el, isDone:true}:el)
+        });
+    };
 
     inputTaskNameHandler = (e) => {
         const {value} = e.target;
@@ -84,7 +99,7 @@ export default class App extends Component {
 
         if(taskName.length > 3){
             this.setState((state, props) => ({
-                tasks: [...state.tasks, {id:state.tasks.length+1, name: taskName}]
+                tasks: [...state.tasks, {id:state.tasks.length+1, name: taskName, isDone:false}]
             }));
             this.setState({
                 inputTaskName: ""
