@@ -14,10 +14,11 @@ export default class App extends Component {
             {id: 1, name:"Wake up"},
             {id: 2, name:"Clean your teeth"},
         ],
+        inputTaskName: ""
     };
 
     render(){
-        const { locale, appName, formName, buttonName, taskListName, tasks } = this.state;
+        const { locale, appName, formName, buttonName, taskListName, tasks, inputTaskName } = this.state;
         return (
             <Fragment>
                 <div className="container">
@@ -32,11 +33,12 @@ export default class App extends Component {
                     <div className="row">
                         <div className="col-12  my-5 Add__New__Task">
                             <h2 className="h3">{ formName }</h2>
-                            <form className="">
+                            <form className="" onSubmit={this.submitCreateNewTask}>
                                 <div className="form-group row">
                                     <label htmlFor="taskName" className="col-sm-2 col-form-label">Task</label>
                                     <div className="col-sm-10">
-                                        <input type="text" className="form-control" id="taskName" placeholder="Enter task" />
+                                        <input type="text" className="form-control" id="taskName" placeholder="Enter task"
+                                              value={inputTaskName} onChange={this.inputTaskNameHandler}/>
                                     </div>
                                 </div>
                                 <button type="submit" className="btn btn-primary">{ buttonName }</button>
@@ -61,4 +63,23 @@ export default class App extends Component {
             </Fragment>
         );
     }
+
+    inputTaskNameHandler = (e) => {
+        const {value} = e.target;
+
+        this.setState({
+            inputTaskName: value
+        });
+    };
+
+    submitCreateNewTask = (e) => {
+        e.preventDefault();
+        const taskName = this.state.inputTaskName;
+        console.log("submitCreateNewTask", e.target[0].value);
+
+        this.setState((state, props) => ({
+            tasks: [...state.tasks, {id:state.tasks.length+1, name: taskName}]
+        }));
+        e.target.reset();
+    };
 };
