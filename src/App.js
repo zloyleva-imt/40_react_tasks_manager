@@ -2,6 +2,8 @@ import React, { Component,Fragment } from 'react';
 
 import './App.css';
 
+import Header from './components/Header'
+
 export default class App extends Component {
 
     state = {
@@ -23,13 +25,8 @@ export default class App extends Component {
 
         return (
             <Fragment>
-                <div className="container">
-                    <div className="row">
-                        <div className="col my-5">
-                            <h1>{ appName[locale] }</h1>
-                        </div>
-                    </div>
-                </div>
+
+                <Header appName={appName} locale={locale}/>
 
                 <div className="container">
                     <div className="row">
