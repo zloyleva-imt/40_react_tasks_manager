@@ -14,11 +14,13 @@ export default class App extends Component {
             {id: 1, name:"Wake up"},
             {id: 2, name:"Clean your teeth"},
         ],
-        inputTaskName: ""
+        inputTaskName: "",
+        hasError: false
     };
 
     render(){
-        const { locale, appName, formName, buttonName, taskListName, tasks, inputTaskName } = this.state;
+        const { locale, appName, formName, buttonName, taskListName, tasks, inputTaskName, hasError } = this.state;
+
         return (
             <Fragment>
                 <div className="container">
@@ -37,8 +39,11 @@ export default class App extends Component {
                                 <div className="form-group row">
                                     <label htmlFor="taskName" className="col-sm-2 col-form-label">Task</label>
                                     <div className="col-sm-10">
-                                        <input type="text" className="form-control" id="taskName" placeholder="Enter task"
-                                              value={inputTaskName} onChange={this.inputTaskNameHandler}/>
+                                        <input type="text" className={`form-control ${hasError?'is-invalid':''}`}
+                                               id="taskName" placeholder="Enter task" value={inputTaskName} onChange={this.inputTaskNameHandler}/>
+                                        <div className="invalid-feedback">
+                                            Please enter more characters.
+                                        </div>
                                     </div>
                                 </div>
                                 <button type="submit" className="btn btn-primary">{ buttonName }</button>
@@ -68,18 +73,27 @@ export default class App extends Component {
         const {value} = e.target;
 
         this.setState({
-            inputTaskName: value
+            inputTaskName: value,
+            hasError: false
         });
     };
 
     submitCreateNewTask = (e) => {
         e.preventDefault();
         const taskName = this.state.inputTaskName;
-        console.log("submitCreateNewTask", e.target[0].value);
 
-        this.setState((state, props) => ({
-            tasks: [...state.tasks, {id:state.tasks.length+1, name: taskName}]
-        }));
-        e.target.reset();
+        if(taskName.length > 3){
+            this.setState((state, props) => ({
+                tasks: [...state.tasks, {id:state.tasks.length+1, name: taskName}]
+            }));
+            this.setState({
+                inputTaskName: ""
+            });
+        }else {
+            this.setState({
+                hasError: true
+            });
+        }
+
     };
 };
