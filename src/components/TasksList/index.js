@@ -1,8 +1,14 @@
 import React from 'react';
+import assignPropTypes from 'assign-prop-types';
+import PropTypes from 'prop-types';
 
 import TaskItem from '../TaskItem';
 
-export default (props) => {
+export default assignPropTypes({
+    taskListName: PropTypes.string,
+    tasks: PropTypes.array,
+    setDone: PropTypes.func,
+})((props) => {
 
     const {taskListName,tasks,setDone} = props;
 
@@ -12,10 +18,10 @@ export default (props) => {
 
             {
                 tasks.map(el => (
-                    <TaskItem el={el} setDone={setDone}/>
+                    <TaskItem el={el} setDone={setDone} key={el.id}/>
                 ))
             }
 
         </div>
     );
-}
+})

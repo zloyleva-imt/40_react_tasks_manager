@@ -1,6 +1,15 @@
 import React from 'react';
+import assignPropTypes from 'assign-prop-types';
+import PropTypes from 'prop-types';
 
-export default (props) => {
+export default assignPropTypes({
+    formName: PropTypes.string,
+    hasError: PropTypes.bool,
+    inputTaskName: PropTypes.string,
+    buttonName: PropTypes.string,
+    inputTaskNameHandler: PropTypes.func,
+    submitCreateNewTask: PropTypes.func,
+})((props) => {
 
     const {formName, hasError, inputTaskName, buttonName, inputTaskNameHandler, submitCreateNewTask} = props;
 
@@ -26,4 +35,4 @@ export default (props) => {
             </form>
         </div>
     );
-}
+})

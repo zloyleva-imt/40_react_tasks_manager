@@ -2,9 +2,10 @@ import React, { Component,Fragment } from 'react';
 
 import './App.css';
 
-import Header from './components/Header'
-import AddNewTask from './components/AddNewTask'
-import TasksList from './components/TasksList'
+import Header from './components/Header';
+import AddNewTask from './components/AddNewTask';
+import TasksList from './components/TasksList';
+import TasksTabs from './components/TasksTabs';
 
 export default class App extends Component {
 
@@ -42,22 +43,7 @@ export default class App extends Component {
                             submitCreateNewTask:this.submitCreateNewTask
                         }} />
 
-                        <div className="col-12 mb-3">
-                            <ul className="nav nav-pills">
-                                <li className="nav-item">
-                                    <a className={`nav-link ${(tabsState === "all"?"active":"")}`} href="#"
-                                        onClick={() => {this.changeTabs("all")}}>All</a>
-                                </li>
-                                <li className="nav-item">
-                                    <a className={`nav-link ${(tabsState === "active"?"active":"")}`} href="#"
-                                       onClick={() => {this.changeTabs("active")}}>Active</a>
-                                </li>
-                                <li className="nav-item">
-                                    <a className={`nav-link ${(tabsState === "done"?"active":"")}`} href="#"
-                                       onClick={() => {this.changeTabs("done")}}>Done</a>
-                                </li>
-                            </ul>
-                        </div>
+                        <TasksTabs tabsState={tabsState} changeTabs={this.changeTabs}/>
 
                         <TasksList taskListName={taskListName} tasks={this.filterTasksForShow(tasks)} setDone={this.setDone}/>
 
@@ -73,8 +59,6 @@ export default class App extends Component {
     };
 
     changeTabs = (tabStatus) => {
-        console.log("changeTabs");
-
         this.setState({
             tabsState: tabStatus
         })

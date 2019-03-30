@@ -1,6 +1,11 @@
 import React from 'react';
+import assignPropTypes from 'assign-prop-types';
+import PropTypes from 'prop-types';
 
-export default (props) => {
+export default assignPropTypes({
+    appName: PropTypes.object,
+    locale: PropTypes.string,
+})((props) => {
     const {appName, locale} = props;
     return (
         <div className="container">
@@ -11,4 +16,4 @@ export default (props) => {
             </div>
         </div>
     );
-}
+})
