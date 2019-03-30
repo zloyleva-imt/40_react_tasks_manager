@@ -4,6 +4,7 @@ import './App.css';
 
 import Header from './components/Header'
 import AddNewTask from './components/AddNewTask'
+import TasksList from './components/TasksList'
 
 export default class App extends Component {
 
@@ -58,33 +59,18 @@ export default class App extends Component {
                             </ul>
                         </div>
 
-                        <div className="col-12 Task__List">
-                            <h2 className="h3">{ taskListName }</h2>
+                        <TasksList taskListName={taskListName} tasks={this.filterTasksForShow(tasks)} setDone={this.setDone}/>
 
-                            {
-                                tasks.map(el => (
-                                    <div
-                                        className={`card my-2 Task__Item ${(el.isDone?"bg-secondary text-white":"")}`} key={el.id}>
-                                        <div className="card-body">
-                                            <h5 className="card-title">{ el.name }</h5>
-                                            {
-                                                el.isDone?
-                                                    null
-                                                    :
-                                                    <button className="btn btn-primary"
-                                                            onClick={() => {this.setDone(el.id)}}>Done</button>
-                                            }
-                                        </div>
-                                    </div>
-                                ))
-                            }
-
-                        </div>
                     </div>
                 </div>
             </Fragment>
         );
     }
+
+    filterTasksForShow = (tasks) => {
+        const {tabsState} = this.state;
+        return tasks.filter(el => tabsState === "all"?true:tabsState === "active" && !el.isDone?true:tabsState === "done" && el.isDone?true:false);
+    };
 
     changeTabs = (tabStatus) => {
         console.log("changeTabs");
