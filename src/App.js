@@ -15,14 +15,22 @@ export default class App extends Component {
         formName: "Add new task",
         buttonName: "Add new task",
         taskListName: "Tasks list",
-        tasks: [
-            {id: 1, name:"Wake up", isDone:false},
-            {id: 2, name:"Clean your teeth", isDone:false},
-        ],
+        tasks: [],
         inputTaskName: "",
         hasError: false,
         tabsState: "all",
     };
+
+    componentDidMount() {
+        setTimeout(()=>{
+            this.setState({
+                tasks: [
+                    {id: 1, name:"Wake up", isDone:false},
+                    {id: 2, name:"Clean your teeth", isDone:false},
+                ]
+            });
+        }, 3000);
+    }
 
     render(){
         const { locale, appName, formName, buttonName, taskListName, tasks, inputTaskName, hasError, tabsState } = this.state;

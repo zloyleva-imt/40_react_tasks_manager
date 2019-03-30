@@ -12,6 +12,12 @@ export default assignPropTypes({
 
     const {taskListName,tasks,setDone} = props;
 
+    if(!tasks.length){
+        return(
+            <div className="col-12">Tasks will load...</div>
+        );
+    }
+
     return (
         <div className="col-12 Task__List">
             <h2 className="h3">{ taskListName }</h2>
