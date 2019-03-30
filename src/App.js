@@ -18,11 +18,12 @@ export default class App extends Component {
             {id: 2, name:"Clean your teeth", isDone:false},
         ],
         inputTaskName: "",
-        hasError: false
+        hasError: false,
+        tabsState: "all",
     };
 
     render(){
-        const { locale, appName, formName, buttonName, taskListName, tasks, inputTaskName, hasError } = this.state;
+        const { locale, appName, formName, buttonName, taskListName, tasks, inputTaskName, hasError, tabsState } = this.state;
 
         return (
             <Fragment>
@@ -39,6 +40,23 @@ export default class App extends Component {
                             inputTaskNameHandler:this.inputTaskNameHandler,
                             submitCreateNewTask:this.submitCreateNewTask
                         }} />
+
+                        <div className="col-12 mb-3">
+                            <ul className="nav nav-pills">
+                                <li className="nav-item">
+                                    <a className={`nav-link ${(tabsState === "all"?"active":"")}`} href="#"
+                                        onClick={() => {this.changeTabs("all")}}>All</a>
+                                </li>
+                                <li className="nav-item">
+                                    <a className={`nav-link ${(tabsState === "active"?"active":"")}`} href="#"
+                                       onClick={() => {this.changeTabs("active")}}>Active</a>
+                                </li>
+                                <li className="nav-item">
+                                    <a className={`nav-link ${(tabsState === "done"?"active":"")}`} href="#"
+                                       onClick={() => {this.changeTabs("done")}}>Done</a>
+                                </li>
+                            </ul>
+                        </div>
 
                         <div className="col-12 Task__List">
                             <h2 className="h3">{ taskListName }</h2>
@@ -67,6 +85,14 @@ export default class App extends Component {
             </Fragment>
         );
     }
+
+    changeTabs = (tabStatus) => {
+        console.log("changeTabs");
+
+        this.setState({
+            tabsState: tabStatus
+        })
+    };
 
     setDone = (id) => {
         const {tasks} = this.state;
